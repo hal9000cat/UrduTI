@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>UrduTI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
+
+<style>
+body {
+    font-family: -apple-system;
+    background: #f7f7f8;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 420px;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #10a37f;
+    color: white;
+}
+
+.option {
+    border: 1px solid #ddd;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.option.selected {
+    background: #e7f7f3;
+}
+
+.hidden { display:none; }
+
+/* ===== 海报样式 ===== */
+.poster {
+    position: relative;
+    height: 650px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #f2f2f2;
+}
+
+.bg-img {
+    position: absolute;
+    width: 200%;
+    left: -50%;
+    top: -20%;
+    filter: grayscale(100%) blur(4px);
+    opacity: 0.08;
+}
+
+.content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 20px;
+}
+
+.avatar {
+    width: 80px;
+    border-radius: 50%;
+}
+
+.urdu {
+    font-family: 'Noto Nastaliq Urdu', serif;
+    font-size: 30px;
+    line-height: 1.8;
+    margin: 30px 0;
+}
+
+.desc {
+    font-size: 14px;
+}
+
+.keywords {
+    font-size: 12px;
+    color: #666;
+    margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<!-- 开始 -->
+<div id="start" class="card">
+<h2>UrduTI</h2>
+<p>测测你的内心世界更像哪一位乌尔都语诗人</p>
+<button onclick="startTest()">开始测试</button>
+</div>
+
+<!-- 题目 -->
+<div id="quiz" class="card hidden">
+<h3 id="question"></h3>
+<div id="options"></div>
+<button onclick="prevQ()">上一题</button>
+<button onclick="nextQ()">下一题</button>
+</div>
+
+<!-- 输入名字 -->
+<div id="namePage" class="card hidden">
+<p>输入你的名字</p>
+<input id="username" style="width:100%;padding:10px;border-radius:8px;border:1px solid #ccc;">
+<button onclick="showResult()">查看结果</button>
+</div>
+
+<!-- 结果 -->
+<div id="result" class="hidden"></div>
+
+</div>
+
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+<script>
+
+// ===== 题目 =====
+const questions = [
+{
+q:"如果让你在不同环境中选择一种更接近自己的鸟，你会是：",
+o:[
+"山鹰——翱翔于高天之上",
+"斑鸠——停留人间烟火",
+"雕鸮——夜里观察一切",
+"雨燕——快速穿行风中"
+]
+},
+{
+q:"你发了一条消息，对方很久没有回复：",
+o:[
+"不管，继续做自己的事",
+"稍微在意，但不会看手机",
+"开始回想是不是说错话",
+"注意力被影响，反复纠结"
+]
+},
+{
+q:"你要渡过一片看不见尽头的海：",
+o:[
+"让海分开",
+"飞过去",
+"冻结海面",
+"造一艘船"
+]
+},
+{
+q:"选一句最像你的状态：",
+o:[
+"我一直向更远走",
+"我仍然想温柔一点",
+"我总在思考为什么",
+"我被情绪带着走"
+]
+}
+];
+
+let current=0;
+let answers=[];
+
+function startTest(){
+start.classList.add("hidden");
+quiz.classList.remove("hidden");
+loadQ();
+}
+
+function loadQ(){
+let q=questions[current];
+question.innerText=q.q;
+options.innerHTML="";
+q.o.forEach((text,i)=>{
+let div=document.createElement("div");
+div.className="option";
+div.innerText=text;
+div.onclick=()=>select(i,div);
+if(answers[current]===i) div.classList.add("selected");
+options.appendChild(div);
+});
+}
+
+function select(i,el){
+answers[current]=i;
+document.querySelectorAll(".option").forEach(o=>o.classList.remove("selected"));
+el.classList.add("selected");
+}
+
+function nextQ(){
+if(current<questions.length-1){
+current++;
+loadQ();
+}else{
+quiz.classList.add("hidden");
+namePage.classList.remove("hidden");
+}
+}
+
+function prevQ(){
+if(current>0){
+current--;
+loadQ();
+}
+}
+
+// ===== 权重算法 =====
+function showResult(){
+
+let name=username.value||"你";
+
+let score = {
+iqbal:0, faiz:0, ghalib:0, jaun:0, parveen:0
+};
+
+answers.forEach((a,i)=>{
+
+if(i===0){
+if(a===0) score.iqbal+=2;
+if(a===1){score.faiz+=2;score.parveen+=1;}
+if(a===2){score.ghalib+=2;score.parveen+=1;}
+if(a===3) score.jaun+=2;
+}
+
+if(i===1){
+if(a===0) score.iqbal+=2;
+if(a===1){score.faiz+=2;score.parveen+=1;}
+if(a===2){score.ghalib+=2;score.parveen+=1;}
+if(a===3) score.jaun+=2;
+}
+
+if(i===2){
+if(a===0) score.iqbal+=2;
+if(a===1) score.jaun+=2;
+if(a===2){score.ghalib+=2;score.parveen+=1;}
+if(a===3){score.faiz+=2;score.parveen+=1;}
+}
+
+if(i===3){
+if(a===0) score.iqbal+=2;
+if(a===1){score.faiz+=2;score.parveen+=1;}
+if(a===2) score.ghalib+=2;
+if(a===3) score.jaun+=2;
+}
+
+});
+
+// 找最大
+let resultKey = Object.keys(score).reduce((a,b)=>score[a]>score[b]?a:b);
+
+// ===== 结果内容 =====
+const results = {
+
+iqbal:{
+title:"伊克巴尔",
+urdu:`ستاروں سے آگے جہاں اور بھی ہیں
+ابھی عشق کے امتحاں اور بھی ہیں`,
+desc:"你总是在向更高处走。",
+intro:"伊克巴尔是南亚著名的诗人和思想家，被称为“东方诗人”。他的诗歌强调自我觉醒与精神力量，鼓励人不断超越现实限制。",
+keywords:"觉醒｜上升｜理想",
+img:"images/iqbal.jpg"
+},
+
+faiz:{
+title:"费兹",
+urdu:`دنیا نے تیری یاد سے بیگانہ کر دیا
+تجھ سے بھی دل فریب ہیں غم روزگار کے`,
+desc:"你在现实中仍然保留温度。",
+intro:"费兹将爱情与现实交织，语言温柔却坚定。",
+keywords:"温柔｜现实｜共情",
+img:"images/faiz.jpg"
+},
+
+ghalib:{
+title:"加利卜",
+urdu:`ہزاروں خواہشیں ایسی کہ ہر خواہش پہ دم نکلے
+بہت نکلے میرے ارمان لیکن پھر بھی کم نکلے`,
+desc:"你活在问题之中。",
+intro:"加利卜擅长用隐喻表达复杂与矛盾。",
+keywords:"思考｜矛盾｜复杂",
+img:"images/ghalib.jpg"
+},
+
+jaun:{
+title:"贾温·埃利亚",
+urdu:`میں بھی بہت عجیب ہوں اتنا عجیب ہوں کہ بس
+خود کو تباہ کر لیا اور ملال بھی نہیں`,
+desc:"你不压抑任何感受。",
+intro:"Jaun Elia用极端真实的语言表达情绪。",
+keywords:"情绪｜真实｜极端",
+img:"images/jaun.jpg"
+},
+
+parveen:{
+title:"帕尔文·沙基尔",
+urdu:`وہ تو خوش بو ہے ہواؤں میں بکھر جائے گا
+مسئلہ پھول کا ہے پھول کدھر جائے گا`,
+desc:"你能感受到未被说出口的变化。",
+intro:"她以细腻女性视角书写情感。",
+keywords:"细腻｜关系｜感知",
+img:"images/parveen.jpg"
+}
+
+};
+
+let r = results[resultKey];
+
+// ===== 渲染海报 =====
+result.innerHTML = `
+<div class="poster" id="poster">
+
+<img src="${r.img}" class="bg-img">
+
+<div class="content">
+
+<img src="${r.img}" class="avatar">
+
+<div class="urdu">
+${r.urdu}
+</div>
+
+<div class="desc">
+<strong>${name}，你的内心世界更像——${r.title}</strong><br><br>
+${r.desc}<br><br>
+${r.intro}
+</div>
+
+<div class="keywords">
+${r.keywords}
+</div>
+
+</div>
+</div>
+
+<button onclick="saveImage()">保存结果</button>
+`;
+
+namePage.classList.add("hidden");
+result.classList.remove("hidden");
+}
+
+// ===== 截图 =====
+function saveImage(){
+html2canvas(document.getElementById("poster")).then(canvas=>{
+let link=document.createElement("a");
+link.download="UrduTI.png";
+link.href=canvas.toDataURL();
+link.click();
+});
+}
+
+</script>
+
+</body>
+</html>
