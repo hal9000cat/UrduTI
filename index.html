@@ -3,414 +3,329 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>UrduTI</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
-
 <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        background: #f7f7f8;
+        font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 16px;
+    }
+    .card {
+        max-width: 500px;
+        width: 100%;
+        background: white;
+        border-radius: 32px;
+        padding: 32px 24px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
     h2 {
-    font-size: clamp(32px, 8vw, 52px);
-    line-height: 1.1;
-    margin: 0;
-    font-weight: 700;
-}
-
-h3 {
-    font-size: clamp(24px, 6vw, 32px);
-    line-height: 1.3;
-}
-
-p {
-    font-size: clamp(15px, 4vw, 18px);
-    line-height: 1.7;
-}
-
-.option {
-    font-size: clamp(16px, 4.5vw, 20px);
-    line-height: 1.5;
-}
-
-button {
-    font-size: 16px;
-    font-weight: 600;
-}
-html, body {
-    margin: 0;
-    padding: 0;
-    background: #f7f7f8;
-}
-body {
-    overflow-x: hidden;
-}
-
-.container {
-    width: 100%;
-    min-height: 100vh;
-}
-
-.container {
-    width: 420px;
-    padding: 20px;
-}
-
-.card {
-    width: 100%;
-    min-height: 100vh;
-    box-sizing: border-box;
-
-    padding: 32px 24px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 10px;
-    border: none;
-    border-radius: 10px;
-    background: #10a37f;
-    color: white;
-}
-
-.option {
-    border: 1px solid #ddd;
-    padding: 12px;
-    margin-top: 10px;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.option.selected {
-    background: #e7f7f3;
-}
-
-.hidden { display:none; }
-
-/* ===== 海报样式 ===== */
-.poster {
-    position: relative;
-    height: 650px;
-    border-radius: 16px;
-    overflow: hidden;
-    background: #f2f2f2;
-}
-
-.bg-img {
-    position: absolute;
-    width: 200%;
-    left: -50%;
-    top: -20%;
-    filter: grayscale(100%) blur(4px);
-    opacity: 0.08;
-}
-
-.content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    padding: 20px;
-}
-
-.avatar {
-    width: 80px;
-    border-radius: 50%;
-}
-
-.urdu {
-    font-family: 'Noto Nastaliq UrAudu', serif;
-    font-size: 30px;
-    line-height: 1.8;
-    margin: 30px 0;
-}
-
-.desc {
-    font-size: 14px;
-}
-
-.keywords {
-    font-size: 12px;
-    color: #666;
-    margin-top: 10px;
-}
+        font-size: 42px;
+        margin-bottom: 16px;
+        font-weight: 700;
+    }
+    h3 {
+        font-size: 24px;
+        line-height: 1.4;
+        margin-bottom: 24px;
+        font-weight: 600;
+    }
+    p {
+        font-size: 18px;
+        line-height: 1.6;
+        margin-bottom: 24px;
+    }
+    button {
+        background: #10a37f;
+        color: white;
+        border: none;
+        border-radius: 40px;
+        padding: 14px 24px;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 12px;
+    }
+    button:hover {
+        background: #0e8a6a;
+    }
+    .option {
+        border: 1.5px solid #e2e8f0;
+        border-radius: 20px;
+        padding: 14px 18px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 17px;
+        background: white;
+    }
+    .option.selected {
+        background: #e7f7f3;
+        border-color: #10a37f;
+    }
+    input {
+        width: 100%;
+        padding: 14px;
+        font-size: 17px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 28px;
+        margin: 16px 0;
+        outline: none;
+    }
+    .hidden {
+        display: none;
+    }
+    .poster {
+        background: linear-gradient(145deg, #fef9e6, #fff6e8);
+        border-radius: 32px;
+        padding: 28px 22px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .urdu {
+        font-family: 'Noto Nastaliq Urdu', serif;
+        font-size: 26px;
+        line-height: 1.6;
+        margin: 24px 0;
+        direction: rtl;
+    }
+    .avatar {
+        font-size: 70px;
+        margin-bottom: 8px;
+    }
+    .desc {
+        font-size: 16px;
+        color: #3a4d36;
+        text-align: left;
+    }
+    .keywords {
+        margin-top: 20px;
+        font-size: 13px;
+        color: #8b9a7a;
+    }
+    .btn-group {
+        display: flex;
+        gap: 12px;
+    }
+    .btn-group button {
+        flex: 1;
+    }
 </style>
 </head>
-
 <body>
-<div class="container">
+<div class="card" id="app">
+    <!-- 开始页面 -->
+    <div id="startPage">
+        <h2> UrduTI</h2>
+        <p>测测你的内心世界更像哪一位乌尔都语诗人</p>
+        <button id="startBtn">开始测试</button>
+    </div>
 
-<!-- 开始 -->
-<div id="start" class="card">
-<h2>UrduTI</h2>
-<p>测测你的内心世界更像哪一位乌尔都语诗人</p>
-<button onclick="startTest()">开始测试</button>
-</div>
+    <!-- 题目页面 -->
+    <div id="quizPage" class="hidden">
+        <h3 id="questionText">加载中...</h3>
+        <div id="optionsArea"></div>
+        <div class="btn-group">
+            <button id="prevBtn">◀ 上一题</button>
+            <button id="nextBtn">下一题 ▶</button>
+        </div>
+    </div>
 
-<!-- 题目 -->
-<div id="quiz" class="card hidden">
-<h3 id="questionText"></h3>
-<div id="optionsContainer"></div>
-<button onclick="prevQ()">上一题</button>
-<button onclick="nextQ()">下一题</button>
-</div>
+    <!-- 输入名字页面 -->
+    <div id="namePage" class="hidden">
+        <p>请输入您的名字</p>
+        <input type="text" id="userName" placeholder="例如：王奶奶">
+        <button id="toResultBtn">查看结果</button>
+    </div>
 
-<!-- 输入名字 -->
-<div id="namePage" class="card hidden">
-<p>输入你的名字</p>
-<input id="username" style="width:100%;padding:10px;border-radius:8px;border:1px solid #ccc;">
-<button onclick="showResult()">查看结果</button>
-</div>
-
-<!-- 结果 -->
-<div id="result" class="hidden"></div>
-
+    <!-- 结果页面 -->
+    <div id="resultPage" class="hidden">
+        <div id="posterArea"></div>
+        <button id="saveImgBtn">保存结果图片</button>
+        <button id="restartBtn" style="background:#6c757d;">重新测试</button>
+    </div>
 </div>
 
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-
 <script>
+    // 题目
+    const questions = [
+        { text: "如果让你在不同环境中选择一种更接近自己的鸟，你会是：", options: ["山鹰 — 翱翔高空，志向远方", "斑鸠 — 停留烟火中，安静陪伴", "雕鸮 — 夜里观察，保持静默", "雨燕 — 快速穿行，很少停歇"] },
+        { text: "你发了一条消息，对方很久没有回复。你更可能：", options: ["不管，继续做自己的事", "稍微有点在意，但不会反复看手机", "开始回想自己是不是哪里措辞不当", "注意力会被影响，反复纠结"] },
+        { text: "你现在需要渡过一片看不见尽头的海。在拥有魔力的情况下，你更喜欢哪种方式？", options: ["让大海从中分开，出现一条路", "轻盈地飞跃过去", "把海面冻结，再走过去", "变出一艘很酷的船，再开过去"] },
+        { text: "如果只能选一句形容你的状态：", options: ["我总是有清晰的目标，从不止步", "世界不完美，但我还是想温柔一点", "我总是在想，事情为什么会这样", "我有着波涛汹涌的内心世界"] }
+    ];
 
-// ===== 题目 =====
-const questions = [
-{
-q:"如果让你在不同环境中选择一种更接近自己的鸟，你会是：",
-o:[
-"山鹰——翱翔于高天之上，向着远方",
-"斑鸠——停留人间烟火中，安静陪伴",
-"雕鸮——在夜里观察一切，保持静默",
-"雨燕——快速穿行在风中，很少停歇"
-]
-},
-{
-q:"你发了一条消息，对方很久没有回复。
-你更可能：",
-o:[
-"不管，继续做自己的事",
-"稍微有点在意，但不会看手机",
-"开始回想自己是不是哪里措辞不当",
-"注意力会被影响，反复纠结起来"
-]
-},
-{
-q:"你现在需要渡过一片看不见尽头的海。
-在拥有魔力的情况下，你更喜欢选择哪种方式？",
-o:[
-" 让大海从中分开，出现一条路",
-"轻盈地飞跃过去",
-" 把海面冻结，再走过去",
-"变出一艘很酷的船，再开过去"
-]
-},
-{
-q:"如果只能选一句形容你的状态：",
-o:[
-"我总是有清晰的目标，从不止步",
-"世界不完美，但我还是想温柔一点",
-". 我总是在想，事情为什么会这样",
-"我有着波涛汹涌的内心世界"
-]
-}
-];
+    // 诗人数据
+    const poetData = {
+        iqbal: { name: "伊克巴尔", urdu: "ستاروں سے آگے جہاں اور بھی ہیں", urdu2: "ابھی عشق کے امتحاں اور بھی ہیں", desc: "你总是在向更高处走。", intro: "伊克巴尔被称为“东方诗人”，强调“自我”的觉醒与成长。", keywords: "觉醒 · 上升 · 理想" },
+        faiz: { name: "费兹",urdu: "دنیا نے تیری یاد سے بیگانہ کر دیا", urdu2: "تجھ سے بھی دل فریب ہیں غم روزگار کے", desc: "你在现实中仍然保留温度。", intro: "费兹将爱情与社会现实交织，温柔地书写苦难。", keywords: "温柔 · 现实 · 共情" },
+        ghalib: { name: "加利卜",  urdu: "ہزاروں خواہشیں ایسی کہ ہر خواہش پہ دم نکلے", urdu2: "بہت نکلے میرے ارمان لیکن پھر بھی کم نکلے", desc: "你活在问题与思索之中。", intro: "加利卜以复杂隐喻和哲思著称，不断提出问题。", keywords: "思考 · 矛盾 · 复杂" },
+        jaun: { name: "贾温·埃利亚",urdu: "میں بھی بہت عجیب ہوں اتنا عجیب ہوں کہ بس", urdu2: "خود کو تباہ کر لیا اور ملال بھی نہیں", desc: "你不压抑任何感受。", intro: "贾温以直白强烈的表达闻名，带着极端的诚实。", keywords: "情绪 · 真实 · 叛逆" },
+        parveen: { name: "帕尔文·沙基尔", urdu: "وہ تو خوش بو ہے ہواؤں میں بکھر جائے گا", urdu2: "مسئلہ پھول کا ہے پھول کدھر جائے گا", desc: "你能感受到未被说出口的变化。", intro: "帕尔文将女性视角带入传统诗歌，语言轻盈。", keywords: "细腻 · 关系 · 感知" }
+    };
 
-let current=0;
-let answers=[];
+    let currentIndex = 0;
+    let userAnswers = [];
 
-function startTest(){
-document.getElementById("start").classList.add("hidden");
-document.getElementById("quiz").classList.remove("hidden");
-loadQ();
-}
+    // 获取页面元素
+    const startPage = document.getElementById('startPage');
+    const quizPage = document.getElementById('quizPage');
+    const namePage = document.getElementById('namePage');
+    const resultPage = document.getElementById('resultPage');
+    const questionText = document.getElementById('questionText');
+    const optionsArea = document.getElementById('optionsArea');
+    const userNameInput = document.getElementById('userName');
+    const posterArea = document.getElementById('posterArea');
 
-function loadQ(){
-let q=questions[current];
-document.getElementById('questionText').innerText = q.q;
-let optionsDiv = document.getElementById('optionsContainer');
-optionsDiv.innerHTML = "";
-q.o.forEach((text,i)=>{
-let div=document.createElement("div");
-div.className="option";
-div.innerText=text;
-div.onclick=()=>select(i,div);
-if(answers[current]===i) div.classList.add("selected");
-optionsDiv.appendChild(div);
-});
-}
+    function showPage(page) {
+        startPage.classList.add('hidden');
+        quizPage.classList.add('hidden');
+        namePage.classList.add('hidden');
+        resultPage.classList.add('hidden');
+        page.classList.remove('hidden');
+    }
 
-function select(i,el){
-answers[current]=i;
-document.querySelectorAll("#optionsContainer .option").forEach(o=>o.classList.remove("selected"));
-el.classList.add("selected");
-}
+    function loadQuestion() {
+        const q = questions[currentIndex];
+        questionText.innerText = q.text;
+        optionsArea.innerHTML = '';
+        q.options.forEach((opt, idx) => {
+            const div = document.createElement('div');
+            div.className = 'option';
+            div.innerText = opt;
+            if (userAnswers[currentIndex] === idx) div.classList.add('selected');
+            div.onclick = () => {
+                userAnswers[currentIndex] = idx;
+                document.querySelectorAll('#optionsArea .option').forEach((item, i) => {
+                    if (i === idx) item.classList.add('selected');
+                    else item.classList.remove('selected');
+                });
+            };
+            optionsArea.appendChild(div);
+        });
+    }
 
-function nextQ(){
-if(current<questions.length-1){
-current++;
-loadQ();
-}else{
-document.getElementById("quiz").classList.add("hidden");
-document.getElementById("namePage").classList.remove("hidden");
-}
-}
+    function calculatePoet() {
+        let score = { iqbal:0, faiz:0, ghalib:0, jaun:0, parveen:0 };
+        userAnswers.forEach((ans, idx) => {
+            if (idx === 0) {
+                if (ans === 0) score.iqbal += 2;
+                else if (ans === 1) { score.faiz += 2; score.parveen += 1; }
+                else if (ans === 2) { score.ghalib += 2; score.parveen += 1; }
+                else if (ans === 3) score.jaun += 2;
+            } else if (idx === 1) {
+                if (ans === 0) score.iqbal += 2;
+                else if (ans === 1) { score.faiz += 2; score.parveen += 1; }
+                else if (ans === 2) { score.ghalib += 2; score.parveen += 1; }
+                else if (ans === 3) score.jaun += 2;
+            } else if (idx === 2) {
+                if (ans === 0) score.iqbal += 2;
+                else if (ans === 1) score.jaun += 2;
+                else if (ans === 2) { score.ghalib += 2; score.parveen += 1; }
+                else if (ans === 3) { score.faiz += 2; score.parveen += 1; }
+            } else if (idx === 3) {
+                if (ans === 0) score.iqbal += 2;
+                else if (ans === 1) { score.faiz += 2; score.parveen += 1; }
+                else if (ans === 2) score.ghalib += 2;
+                else if (ans === 3) score.jaun += 2;
+            }
+        });
+        return Object.keys(score).reduce((a,b) => score[a] > score[b] ? a : b);
+    }
 
-function prevQ(){
-if(current>0){
-current--;
-loadQ();
-}
-}
+    function showResult() {
+        let name = userNameInput.value.trim();
+        if (name === "") name = "亲爱的朋友";
+        const poetKey = calculatePoet();
+        const poet = poetData[poetKey];
+        posterArea.innerHTML = `
+            <div id="posterCard" style="text-align:center;">
+                <div class="poster">
+                    <div class="avatar">${poet.emoji}</div>
+                    <div class="urdu">
+                        ${poet.urdu}<br>${poet.urdu2}
+                    </div>
+                    <div class="desc">
+                        <strong>✨ ${name}，您的内心世界更像 —— ${poet.name} ✨</strong><br><br>
+                        ${poet.desc}<br><br>
+                        ${poet.intro}<br><br>
+                        <span style="background:#f0efe7; padding:6px 14px; border-radius:40px;">${poet.keywords}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+        showPage(resultPage);
+    }
 
-// ===== 权重算法 =====
-function showResult(){
+    function saveImage() {
+        const posterDiv = document.getElementById('posterCard');
+        if (!posterDiv) { alert("请稍后再试"); return; }
+        html2canvas(posterDiv, { scale: 2, backgroundColor: "#fef9e6" }).then(canvas => {
+            let link = document.createElement('a');
+            link.download = "UrduTI.png";
+            link.href = canvas.toDataURL();
+            link.click();
+        }).catch(() => alert("生成图片失败，可以截图保存"));
+    }
 
-let name=document.getElementById("username").value||"你";
+    function restartTest() {
+        currentIndex = 0;
+        userAnswers = [];
+        showPage(startPage);
+    }
 
-let score = {
-iqbal:0, faiz:0, ghalib:0, jaun:0, parveen:0
-};
+    // 绑定按钮事件
+    document.getElementById('startBtn').onclick = () => {
+        currentIndex = 0;
+        userAnswers = [];
+        loadQuestion();
+        showPage(quizPage);
+    };
 
-answers.forEach((a,i)=>{
+    document.getElementById('prevBtn').onclick = () => {
+        if (currentIndex > 0) {
+            currentIndex--;
+            loadQuestion();
+        } else {
+            alert("已经是第一题了");
+        }
+    };
 
-if(i===0){
-if(a===0) score.iqbal+=2;
-if(a===1){score.faiz+=2;score.parveen+=1;}
-if(a===2){score.ghalib+=2;score.parveen+=1;}
-if(a===3) score.jaun+=2;
-}
+    document.getElementById('nextBtn').onclick = () => {
+        if (userAnswers[currentIndex] === undefined) {
+            alert("请先选择一个答案");
+            return;
+        }
+        if (currentIndex < questions.length - 1) {
+            currentIndex++;
+            loadQuestion();
+        } else {
+            showPage(namePage);
+        }
+    };
 
-if(i===1){
-if(a===0) score.iqbal+=2;
-if(a===1){score.faiz+=2;score.parveen+=1;}
-if(a===2){score.ghalib+=2;score.parveen+=1;}
-if(a===3) score.jaun+=2;
-}
+    document.getElementById('toResultBtn').onclick = () => {
+        if (userAnswers.length !== questions.length || userAnswers.some(a => a === undefined)) {
+            alert("请答完所有题目");
+            return;
+        }
+        showResult();
+    };
 
-if(i===2){
-if(a===0) score.iqbal+=2;
-if(a===1) score.jaun+=2;
-if(a===2){score.ghalib+=2;score.parveen+=1;}
-if(a===3){score.faiz+=2;score.parveen+=1;}
-}
+    document.getElementById('saveImgBtn').onclick = saveImage;
+    document.getElementById('restartBtn').onclick = restartTest;
 
-if(i===3){
-if(a===0) score.iqbal+=2;
-if(a===1){score.faiz+=2;score.parveen+=1;}
-if(a===2) score.ghalib+=2;
-if(a===3) score.jaun+=2;
-}
-
-});
-
-// 找最大
-let resultKey = Object.keys(score).reduce((a,b)=>score[a]>score[b]?a:b);
-
-// ===== 结果内容 =====
-const results = {
-
-iqbal:{
-title:"伊克巴尔",
-urdu:`ستاروں سے آگے جہاں اور بھی ہیں
-ابھی عشق کے امتحاں اور بھی ہیں`,
-translation:"星辰之外还有更广阔的宇宙，
-爱与追寻的考验仍在前方。",
-desc:"你总是在向更高处走。",
-intro:"伊克巴尔（Allama Iqbal）是南亚著名的诗人和思想家，被称为“东方诗人”。他的诗歌强调“自我”的觉醒与成长，鼓励人不断超越现实的限制。他的诗歌围绕“自我（Khudi）”展开，强调个体的觉醒与精神力量。他的思想不仅影响文学，也深刻影响了南亚的社会与政治想象。",
-keywords:"觉醒｜上升｜理想",
-},
-
-faiz:{
-title:"费兹",
-urdu:`دنیا نے تیری یاد سے بیگانہ کر دیا
-تجھ سے بھی دل فریب ہیں غم روزگار کے`,
-translation:"这世界让我渐渐忘了你，
-生活的苦痛，比你更牵动人心。",
-desc:"你在现实中仍然保留温度。",
-intro:"费兹（ Faiz Ahmed Faiz）是20世纪最重要的乌尔都语诗人之一，同时也是记者与社会活动者。他曾因政治立场被监禁，这段经历也深刻影响了他的写作。《Mujh Se Pehli Si Mohabbat》《Bol》是他的代表作，将爱情语言与社会现实交织在一起。费兹的诗歌常把爱情与社会现实交织在一起。他温柔地书写苦难，却从不走向绝望。",
-keywords:"温柔｜现实｜共情",
-},
-
-ghalib:{
-title:"加利卜",
-urdu:`ہزاروں خواہشیں ایسی کہ ہر خواہش پہ دم نکلے
-بہت نکلے میرے ارمان لیکن پھر بھی کم نکلے`,
-translation:"千万种欲望，每一种都让人窒息，
-实现了许多，却仍然远远不够。",
-desc:"你活在问题与思索之中。",
-intro:"加利卜（Mirza Ghalib）是19世纪最具代表性的乌尔都诗人之一，生活在莫卧儿帝国衰落时期。他一生坎坷，经历了亲人离世与时代动荡，这些都融入他的诗中。他的诗以复杂的隐喻和深刻的哲思著称，如“千种欲望”一诗，展现人欲与虚无的张力。他不提供答案，而是不断提出问题，使读者在矛盾中看见更真实的自己。",
-keywords:"思考｜矛盾｜复杂",
-},
-
-jaun:{
-title:"贾温·埃利亚",
-urdu:`میں بھی بہت عجیب ہوں اتنا عجیب ہوں کہ بس
-خود کو تباہ کر لیا اور ملال بھی نہیں`,
-translation:"我这个人很奇怪，奇怪到——
-毁掉了自己，也并不觉得遗憾。",
-desc:"你不压抑任何感受。",
-intro:"贾温·埃利亚（Jaun Elia）是20世纪后期极具个性的诗人，以直白而强烈的表达闻名。他的诗集《Shayad》出版较晚，却迅速引发共鸣。他不回避孤独、虚无与情感破裂，他的表达几乎没有修饰，带着一种极端的诚实，他的文字像一次自我拆解，也像对世界的直接对抗。",
-keywords:"情绪｜真实｜叛逆",
-},
-
-parveen:{
-title:"帕尔文·沙基尔",
-urdu:`وہ تو خوش بو ہے ہواؤں میں بکھر جائے گا
-مسئلہ پھول کا ہے پھول کدھر جائے گا`,
-translation:"香气会消散在风里，
-困住的，是那朵无处可去的花。",
-desc:"你能感受到未被说出口的变化。",
-intro:"帕尔文·沙基尔（Parveen Shakir）是巴基斯坦著名女性诗人，以细腻而现代的表达著称。她的首部诗集《Khushbu》广受欢迎，使她迅速成名。她将女性视角带入传统乌尔都诗歌，书写爱情、关系与自我意识的微妙变化。她同时也是一名公务员，生活与创作并行。她的诗语言轻盈，却常常在细节中留下长久的情绪回声。",
-keywords:"细腻｜关系｜感知",
-}
-
-};
-
-let r = results[resultKey];
-
-// ===== 渲染海报 =====
-document.getElementById("result").innerHTML = `
-<div class="poster" id="poster">
-
-<img src="${r.img}" class="bg-img">
-
-<div class="content">
-
-<img src="${r.img}" class="avatar">
-
-<div class="urdu">
-${r.urdu}
-</div>
-
-<div class="desc">
-<strong>${name}，你的内心世界更像——${r.title}</strong><br><br>
-${r.desc}<br><br>
-${r.intro}
-</div>
-
-<div class="keywords">
-${r.keywords}
-</div>
-
-</div>
-</div>
-
-<button onclick="saveImage()">保存结果</button>
-`;
-
-document.getElementById("namePage").classList.add("hidden");
-document.getElementById("result").classList.remove("hidden");
-}
-
-// ===== 截图 =====
-function saveImage(){
-html2canvas(document.getElementById("poster")).then(canvas=>{
-let link=document.createElement("a");
-link.download="UrduTI.png";
-link.href=canvas.toDataURL();
-link.click();
-});
-}
-
+    // 一开始显示开始页面
+    showPage(startPage);
 </script>
-
 </body>
 </html>
