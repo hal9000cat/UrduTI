@@ -217,9 +217,13 @@ let current=0;
 let answers=[];
 
 function startTest(){
-start.classList.add("hidden");
-quiz.classList.remove("hidden");
+
+document.getElementById("start").classList.add("hidden");
+
+document.getElementById("quiz").classList.remove("hidden");
+
 loadQ();
+
 }
 
 function loadQ(){
